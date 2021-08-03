@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MoneyManager.Models;
 
 namespace MoneyManager.Repository
@@ -21,6 +22,11 @@ namespace MoneyManager.Repository
             await _moneyContext.SaveChangesAsync();
 
             return moneyUsages;
+        }
+
+        public async Task<IEnumerable<MoneyUsage>> GetMoneyUsage()
+        {
+            return await _moneyContext.MoneyUsages.ToListAsync();
         }
     }
 }

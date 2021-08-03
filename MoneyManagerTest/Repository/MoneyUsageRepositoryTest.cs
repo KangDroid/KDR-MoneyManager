@@ -22,6 +22,25 @@ namespace MoneyManagerTest.Repository
             _moneyRepository = new MoneyUsageRepository(_moneyContext);
         }
 
+        private List<MoneyUsage> CreateRandomMoneyList(int count)
+        {
+            var emptyList = new List<MoneyUsage>();
+            for (int i = 0; i < count; i++)
+            {
+                emptyList.Add(new MoneyUsage
+                {
+                    GradId = Guid.NewGuid().ToString(),
+                    UserDate = DateTime.Now,
+                    CardType = Guid.NewGuid().ToString(),
+                    UsedLocation = Guid.NewGuid().ToString(),
+                    MoneyUsed = 21600,
+                    UsedType = Guid.NewGuid().ToString()
+                });
+            }
+
+            return emptyList;
+        }
+
         [Fact(DisplayName = "SaveMoneyUsage saves emptyList well.")]
         public async void Is_SaveMoneyUsage_Saves_emptyList_Well()
         {
@@ -47,19 +66,7 @@ namespace MoneyManagerTest.Repository
         public async void Is_SaveMoneyUsage_Saves_Multiple_Entity_Well(int count)
         {
             // Generate Random Data
-            var emptyList = new List<MoneyUsage>(count);
-            for (int i = 0; i < count; i++)
-            {
-                emptyList.Add(new MoneyUsage
-                {
-                    GradId = Guid.NewGuid().ToString(),
-                    UserDate = DateTime.Now,
-                    CardType = Guid.NewGuid().ToString(),
-                    UsedLocation = Guid.NewGuid().ToString(),
-                    MoneyUsed = 21600,
-                    UsedType = Guid.NewGuid().ToString()
-                });
-            }
+            var emptyList = CreateRandomMoneyList(count);
             
             // Do
             var resultList = (await _moneyRepository.SaveMoneyUsage(emptyList)).ToList();
@@ -94,6 +101,29 @@ namespace MoneyManagerTest.Repository
             
             // Check
             await Assert.ThrowsAnyAsync<Exception>(() => _moneyRepository.SaveMoneyUsage(new List<MoneyUsage> {mockMoneyUsage}));
+        }
+
+        [Theory(DisplayName = "GetMoneyUsage Get proper list well")]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(4)]
+        [InlineData(8)]
+        [InlineData(16)]
+        [InlineData(32)]
+        [InlineData(64)]
+        [InlineData(128)]
+        [InlineData(256)]
+        [InlineData(512)]
+        public async void Is_GetMoneyUsage_Returns_Proper_List(int toRegister)
+        {
+            // Prep
+            var moneyList = CreateRandomMoneyList(toRegister);
+            await _moneyRepository.SaveMoneyUsage(moneyList);
+            
+            // Check
+            var resultList = (await _moneyRepository.GetMoneyUsage()).ToList();
+            Assert.Equal(toRegister, resultList.Count);
         }
     }
 }
