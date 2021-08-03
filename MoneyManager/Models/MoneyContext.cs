@@ -6,7 +6,7 @@ namespace MoneyManager.Models
     public class MoneyContext: DbContext
     {
         [ExcludeFromCodeCoverage]
-        public MoneyContext(DbContextOptions<DbContext> options) : base(options)
+        public MoneyContext(DbContextOptions<MoneyContext> options) : base(options)
         {
         }
         

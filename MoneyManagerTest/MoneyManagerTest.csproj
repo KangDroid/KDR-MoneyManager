@@ -20,4 +20,8 @@
         <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MoneyManager\MoneyManager.csproj" />
+    </ItemGroup>
+
 </Project>
