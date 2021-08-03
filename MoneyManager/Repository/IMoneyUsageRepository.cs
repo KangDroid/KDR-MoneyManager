@@ -6,6 +6,6 @@ namespace MoneyManager.Repository
 {
     public interface IMoneyUsageRepository
     {
-        public Task<IEnumerable<MoneyUsage>> SaveMoneyUsage(IEnumerable<MoneyUsage> moneyUsages);
+        public Task<IEnumerable<MoneyUsage>> SaveMoneyUsage(List<MoneyUsage> moneyUsages);
     }
 }
