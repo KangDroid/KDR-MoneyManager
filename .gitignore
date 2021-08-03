@@ -1,4 +1,6 @@
 .idea/**
+MoneyManagerTest/coverage.cobertura.xml
+coveragereport
 bin/
 obj/
 /packages/
