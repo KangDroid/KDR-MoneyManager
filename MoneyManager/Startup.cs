@@ -31,7 +31,7 @@ namespace MoneyManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<MoneyContext>(options => options.UseSqlServer());
+            services.AddDbContext<MoneyContext>(options => options.UseSqlServer("Server=localhost; Database=kdr-test; UID=SA; Password=testPassword@;"));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "MoneyManager", Version = "v1"});
