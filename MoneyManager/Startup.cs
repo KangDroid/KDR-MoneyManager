@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MoneyManager.Models;
+using MoneyManager.Repository;
+using MoneyManager.Service;
 
 namespace MoneyManager
 {
@@ -32,6 +34,8 @@ namespace MoneyManager
         {
             services.AddControllers();
             services.AddDbContext<MoneyContext>(options => options.UseSqlServer("Server=localhost; Database=kdr-test; UID=SA; Password=testPassword@;"));
+            services.AddScoped<IMoneyUsageRepository, MoneyUsageRepository>();
+            services.AddScoped<IMoneyUsageService, MoneyUsageService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "MoneyManager", Version = "v1"});
