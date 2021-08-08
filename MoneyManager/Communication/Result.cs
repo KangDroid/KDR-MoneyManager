@@ -11,6 +11,7 @@ namespace MoneyManager.Communication
     public enum ResultInfo
     {
         Success,
-        BadCsvHeader
+        BadCsvHeader,
+        DbUpdateError
     }
 }

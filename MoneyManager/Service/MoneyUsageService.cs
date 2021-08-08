@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -51,6 +52,30 @@ namespace MoneyManager.Service
             {
                 ResultObject = convertedList,
                 Status = ResultInfo.Success
+            };
+        }
+
+        public async Task<Result<List<MoneyUsage>>> SaveMoneyUsage(List<MoneyUsage> moneyUsages)
+        {
+            List<MoneyUsage> targetList;
+            try
+            {
+                targetList = (await _moneyUsageRepository.SaveMoneyUsage(moneyUsages)).ToList();
+            }
+            catch (Exception e)
+            {
+                return new Result<List<MoneyUsage>>
+                {
+                    Status = ResultInfo.DbUpdateError,
+                    FailureMessage = "Failed to update db with data!",
+                    DetailedFailureMessage = $"StackTrace: {e.Message}"
+                };
+            }
+
+            return new Result<List<MoneyUsage>>
+            {
+                Status = ResultInfo.Success,
+                ResultObject = targetList
             };
         }
 

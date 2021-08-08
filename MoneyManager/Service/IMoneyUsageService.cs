@@ -9,5 +9,6 @@ namespace MoneyManager.Service
     public interface IMoneyUsageService
     {
         public Task<Result<List<MoneyUsage>>> GetMoneyUsageFromCsv(IFormFile csvFile);
+        public Task<Result<List<MoneyUsage>>> SaveMoneyUsage(List<MoneyUsage> moneyUsages);
     }
 }

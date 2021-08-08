@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using CsvHelper;
 using Microsoft.AspNetCore.Http;
 using MoneyManager.Communication;
@@ -123,6 +122,37 @@ namespace MoneyManagerTest.Service
                 var result = await _moneyUsageService.GetMoneyUsageFromCsv(testFormFile);
                 Assert.Equal(ResultInfo.BadCsvHeader, result.Status);
             }
+        }
+
+        [Fact(DisplayName = "SaveMoneyUsage: SaveMoneyUsage should return number of saved instance well.")]
+        public async void Is_SaveMoneyUsage_Works_Well()
+        {
+            var mockList = new List<MoneyUsage>()
+            {
+                new(), new(), new()
+            };
+            
+            _moneyRepository.Setup(a => a.SaveMoneyUsage(It.IsAny <List<MoneyUsage>>()))
+                .ReturnsAsync(mockList);
+
+            var result = await _moneyUsageService.SaveMoneyUsage(mockList);
+            
+            // Check
+            Assert.Equal(ResultInfo.Success, result.Status);
+            Assert.Equal(mockList.Count, result.ResultObject.Count);
+        }
+
+        [Fact(DisplayName =
+            "SaveMoneyUsage: SaveMoneyUsage should return dbUpdateError when exception occurred when saving entity.")]
+        public async void Is_SaveMoneyUsage_Returns_DbUpdateError_Well()
+        {
+            _moneyRepository.Setup(a => a.SaveMoneyUsage(It.IsAny <List<MoneyUsage>>()))
+                .ThrowsAsync(new Exception());
+
+            var result = await _moneyUsageService.SaveMoneyUsage(new List<MoneyUsage>());
+            
+            // Check
+            Assert.Equal(ResultInfo.DbUpdateError, result.Status);
         }
     }
 }
