@@ -24,11 +24,22 @@ using Xunit;
 
 namespace MoneyManagerTest.Controller
 {
-    public class MoneyControllerTest
+    public class MoneyControllerTest: IDisposable
     {
         private HttpClient _httpClient;
         private TestServer _testServer;
-        
+
+        public void Dispose()
+        {
+            var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer("Server=localhost; Database=kdr-test; UID=SA; Password=testPassword@;").Options;
+            var context = new MoneyContext(dbOptions);
+            
+            // Cleanup
+            context.Database.EnsureCreated();
+            context.MoneyUsages.RemoveRange(context.MoneyUsages);
+            context.SaveChanges();
+        }
+
         private TestServer InitializeServer(Func<IServiceCollection, object> serviceLambda)
         {
             var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer("Server=localhost; Database=kdr-test; UID=SA; Password=testPassword@;").Options;

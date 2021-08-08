@@ -9,11 +9,19 @@ using Xunit;
 
 namespace MoneyManagerTest.Repository
 {
-    public class MoneyUsageRepositoryTest
+    public class MoneyUsageRepositoryTest: IDisposable
     {
         private readonly IMoneyUsageRepository _moneyRepository;
         private readonly MoneyContext _moneyContext;
-        
+
+        public void Dispose()
+        {
+            // Cleanup
+            _moneyContext.Database.EnsureCreated();
+            _moneyContext.MoneyUsages.RemoveRange(_moneyContext.MoneyUsages);
+            _moneyContext.SaveChanges();
+        }
+
         public MoneyUsageRepositoryTest()
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
