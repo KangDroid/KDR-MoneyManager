@@ -92,8 +92,8 @@ namespace MoneyManagerTest.Repository
             }
         }
 
-        [Fact(DisplayName = "SaveMoneyUsage Throws exception when same key applied.")]
-        public async void Is_SaveMoneyUsage_Throws_Exception_When_Duplicated_Key()
+        [Fact(DisplayName = "SaveMoneyUsage will save updated item when same key applied.")]
+        public async void Is_SaveMoneyUsage_Save_Updated_Item_When_Duplicated_Key()
         {
             var mockMoneyUsage = new MoneyUsage
             {
@@ -108,7 +108,8 @@ namespace MoneyManagerTest.Repository
             await _moneyRepository.SaveMoneyUsage(new List<MoneyUsage> {mockMoneyUsage});
             
             // Check
-            await Assert.ThrowsAnyAsync<Exception>(() => _moneyRepository.SaveMoneyUsage(new List<MoneyUsage> {mockMoneyUsage}));
+            var result = await _moneyRepository.SaveMoneyUsage(new List<MoneyUsage> { mockMoneyUsage });
+            Assert.Single(result);
         }
 
         [Theory(DisplayName = "GetMoneyUsage Get proper list well")]

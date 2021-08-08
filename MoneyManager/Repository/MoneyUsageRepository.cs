@@ -18,6 +18,18 @@ namespace MoneyManager.Repository
         // Add Money to DB
         public async Task<IEnumerable<MoneyUsage>> SaveMoneyUsage(List<MoneyUsage> moneyUsages)
         {
+            // Remove any duplicated contents.
+            foreach (var eachMoneyUsage in moneyUsages)
+            {
+                var isExists = _moneyContext.MoneyUsages.SingleOrDefault(a => a.GradId == eachMoneyUsage.GradId);
+                if (isExists != null)
+                {
+                    _moneyContext.Remove(isExists);
+                }
+            }
+            await _moneyContext.SaveChangesAsync();
+            
+            // Add them
             await _moneyContext.AddRangeAsync(moneyUsages);
             await _moneyContext.SaveChangesAsync();
 
