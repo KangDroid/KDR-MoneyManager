@@ -20,8 +20,13 @@ namespace MoneyManagerTest.Repository
             var connectionString = configuration.GetConnectionString("MoneyManagementDb");
             var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer("Server=localhost; Database=kdr-test; UID=SA; Password=testPassword@;").Options;
             _moneyContext = new MoneyContext(dbOptions);
+            
+            // Cleanup
+            _moneyContext.Database.EnsureCreated();
             _moneyContext.MoneyUsages.RemoveRange(_moneyContext.MoneyUsages);
             _moneyContext.SaveChanges();
+            
+            // New Repository
             _moneyRepository = new MoneyUsageRepository(_moneyContext);
         }
 
