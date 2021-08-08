@@ -7,5 +7,7 @@
     &lt;TestId&gt;xUnit::D671178A-EC84-473F-AAA3-D139EAA22673::net5.0::MoneyManagerTest.Service.MoneyUsageServiceTest.Is_GetMoneyUsageFromCsv_Returns_BadCsvHeader_No_Matter_What&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::D671178A-EC84-473F-AAA3-D139EAA22673::net5.0::MoneyManagerTest.Service.MoneyUsageServiceTest.Is_SaveMoneyUsage_Returns_DbUpdateError_Well&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::D671178A-EC84-473F-AAA3-D139EAA22673::net5.0::MoneyManagerTest.Service.MoneyUsageServiceTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D671178A-EC84-473F-AAA3-D139EAA22673::net5.0::MoneyManagerTest.Controller.MoneyControllerTest.Is_SaveMoneyUsageFromCsv_Returns_Well&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D671178A-EC84-473F-AAA3-D139EAA22673::net5.0::MoneyManagerTest.Controller.MoneyControllerTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
