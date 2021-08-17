@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MoneyManager.Models;
 using MoneyManager.Repository;
+using MoneyManagerTest.Configuration;
 using Xunit;
 
 namespace MoneyManagerTest.Repository
@@ -24,9 +25,7 @@ namespace MoneyManagerTest.Repository
 
         public MoneyUsageRepositoryTest()
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
-            var connectionString = configuration.GetConnectionString("MoneyManagementDb");
-            var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer("Server=localhost; Database=kdr-test; UID=SA; Password=testPassword@;").Options;
+            var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(CustomTestConfiguration.DbConnectionString).Options;
             _moneyContext = new MoneyContext(dbOptions);
             
             // Cleanup

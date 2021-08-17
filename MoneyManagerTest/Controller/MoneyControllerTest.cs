@@ -19,6 +19,7 @@ using MoneyManager.Controllers;
 using MoneyManager.Models;
 using MoneyManager.Repository;
 using MoneyManager.Service;
+using MoneyManagerTest.Configuration;
 using Moq;
 using Xunit;
 
@@ -31,7 +32,7 @@ namespace MoneyManagerTest.Controller
 
         public void Dispose()
         {
-            var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer("Server=localhost; Database=kdr-test; UID=SA; Password=testPassword@;").Options;
+            var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(CustomTestConfiguration.DbConnectionString).Options;
             var context = new MoneyContext(dbOptions);
             
             // Cleanup
@@ -42,7 +43,7 @@ namespace MoneyManagerTest.Controller
 
         private TestServer InitializeServer(Func<IServiceCollection, object> serviceLambda)
         {
-            var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer("Server=localhost; Database=kdr-test; UID=SA; Password=testPassword@;").Options;
+            var dbOptions = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(CustomTestConfiguration.DbConnectionString).Options;
             var context = new MoneyContext(dbOptions);
             
             // Cleanup
